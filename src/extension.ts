@@ -1,13 +1,9 @@
 import * as vscode from "vscode";
-import { Standing, ApiResponse } from "./types";
+import { Standing, ApiResponse, MATCH_RESULT } from "./types";
 
 const endpoint = "https://ekstraklasa.szarbartosz.com/table";
 
 export function activate(context: vscode.ExtensionContext) {
-  console.log(
-    'Congratulations, your extension "vscode-ekstraklasa" is now active!'
-  );
-
   context.subscriptions.push(
     vscode.commands.registerCommand("vscode-ekstraklasa.helloWorld", () => {
       const panel = vscode.window.createWebviewPanel(
@@ -63,6 +59,11 @@ function getWebviewContent(standings: Standing[]) {
         width: auto;
         height: auto;
       }
+      .last-five{
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
     </style>
 	</head>
 	<body>
@@ -77,6 +78,7 @@ function getWebviewContent(standings: Standing[]) {
         <th>GA</th>
         <th>GD</th>
         <th>Pts</th>
+        <th>Last 5</th>
       </tr>
 
       ${standings
@@ -98,6 +100,21 @@ function getWebviewContent(standings: Standing[]) {
           <td>${standing.goalsAgainst}</td>
           <td>${standing.goalsDifference}</td>
           <td>${standing.teamPoints}</td>
+          <td>
+            <div class="last-five">
+              ${standing.lastResults
+                .map(
+                  (result) => /*html*/ `
+                  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="50" fill=${resultToColor(
+                      result
+                    )}></circle>
+                  </svg>
+                `
+                )
+                .join("")}
+            </div>
+          </td>
         </tr>
       `
         )
@@ -105,4 +122,15 @@ function getWebviewContent(standings: Standing[]) {
 	</body>
 	</html>
   `;
+}
+
+function resultToColor(result: MATCH_RESULT) {
+  switch (result) {
+    case MATCH_RESULT.LOST:
+      return "red";
+    case MATCH_RESULT.DRAW:
+      return "gray";
+    case MATCH_RESULT.WON:
+      return "green";
+  }
 }
