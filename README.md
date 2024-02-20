@@ -1,7 +1,7 @@
 
 <div align="center">
   <h1>vscode-ekstraklasa</h1>
-  <img alt="Lewandowski meme"" src="https://github.com/kraleppa/vscode-ekstraklasa/assets/56135216/f626bf49-0554-460c-9f16-f1c72cc58b9a">
+  <img alt="Ekstraklasa logo"" src="https://github.com/kraleppa/vscode-ekstraklasa/assets/56135216/2de3e9ea-2c64-4594-91c1-52f1174857a0">
 </div>
 
 
