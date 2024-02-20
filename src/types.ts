@@ -15,7 +15,7 @@ export type Standing = {
   losses: number;
   goalsFor: number;
   goalsAgainst: number;
-  goalDifference: number;
+  goalsDifference: number;
   teamPoints: number;
 };
 

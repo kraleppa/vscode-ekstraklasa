@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import { Standing, ApiResponse } from "./types";
 
-const endpoint = "https://ekstraklasa.szarbartosz.com";
+const endpoint = "https://ekstraklasa.szarbartosz.com/table";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log(
@@ -47,28 +47,57 @@ function getWebviewContent(standings: Standing[]) {
         text-align: left;
         padding: 8px;
       }
+      .team-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .image-wrapper {
+        width: 28px;
+        height: 28px;
+        display: flex;
+        justify-content: center;
+        margin-right: 8px;
+      }
+      .img { 
+        width: auto;
+        height: auto;
+      }
     </style>
 	</head>
 	<body>
     <table>
+      <tr>
+        <th>Club</th>
+        <th>MP</th>
+        <th>W</th>
+        <th>D</th>
+        <th>L</th>
+        <th>GF</th>
+        <th>GA</th>
+        <th>GD</th>
+        <th>Pts</th>
+      </tr>
 
       ${standings
         .map(
           (standing) => /*html*/ `
         <tr>
-          <td>
-
-            <img src="${standing.logoUrl}" alt="${standing.teamName}" width="20" height="auto"/>
+          <td class="team-info">
+            <div class="image-wrapper">
+              <img src="${standing.logoUrl}" alt="${standing.teamName}"/>
+            </div>
             <p>${standing.position}</p>
             <p>${standing.teamName}</p>
           </td>
-
-          <td>${standing.teamPoints}</td>
+          <td>${standing.gamesPlayed}</td>
           <td>${standing.wins}</td>
           <td>${standing.draws}</td>
           <td>${standing.losses}</td>
-          <td>${standing.goalsAgainst}</td>
           <td>${standing.goalsFor}</td>
+          <td>${standing.goalsAgainst}</td>
+          <td>${standing.goalsDifference}</td>
+          <td>${standing.teamPoints}</td>
         </tr>
       `
         )
