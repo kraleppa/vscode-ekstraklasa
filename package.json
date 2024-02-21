@@ -2,14 +2,20 @@
   "name": "vscode-ekstraklasa",
   "displayName": "vscode-ekstraklasa",
   "description": "Stay up to date with the polish league",
+	"license": "MIT",
   "version": "0.0.1",
+  "publisher": "kraleppa",
+  "icon": "assets/logo.png",
   "engines": {
     "vscode": "^1.86.0"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kraleppa/vscode-ekstraklasa.git"
+  },
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
