@@ -39,9 +39,11 @@ function getWebviewContent(standings: Standing[]) {
         width: 100%;
       }
       td, th {
-        border: 1px solid;
         text-align: left;
         padding: 8px;
+      }
+      tr:not(:first-child) {
+        border-top: 1px solid;
       }
       .team-info {
         display: flex;
@@ -63,6 +65,11 @@ function getWebviewContent(standings: Standing[]) {
         display: flex;
         align-items: center;
         gap: 4px;
+      }
+      .dot {
+        height: 15px;
+        width: 15px;
+        border-radius: 50%;
       }
     </style>
 	</head>
@@ -105,11 +112,9 @@ function getWebviewContent(standings: Standing[]) {
               ${standing.lastResults
                 .map(
                   (result) => /*html*/ `
-                  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="50" cy="50" r="50" fill=${resultToColor(
-                      result
-                    )}></circle>
-                  </svg>
+                  <div class="dot" style="background-color: #${resultToColor(
+                    result
+                  )}"></div>
                 `
                 )
                 .join("")}
@@ -127,10 +132,10 @@ function getWebviewContent(standings: Standing[]) {
 function resultToColor(result: MATCH_RESULT) {
   switch (result) {
     case MATCH_RESULT.LOST:
-      return "red";
+      return "D81A34";
     case MATCH_RESULT.DRAW:
-      return "gray";
+      return "A5A5A5";
     case MATCH_RESULT.WON:
-      return "green";
+      return "00E100";
   }
 }
