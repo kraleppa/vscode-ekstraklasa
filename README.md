@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>vscode-ekstraklasa</h1>
+  <h1>Ekstraklasa Extension</h1>
   <img alt="Ekstraklasa logo" src="./assets/logo.png">
 </div>
 
