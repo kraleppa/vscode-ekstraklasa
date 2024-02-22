@@ -1,7 +1,7 @@
 {
   "name": "vscode-ekstraklasa",
   "displayName": "Ekstraklasa Extension",
-  "description": "Stay up to date with your favourite football league!",
+  "description": "Stay up to date with your favourite football league without leaving a VSCode!",
 	"license": "MIT",
   "version": "0.0.1",
   "publisher": "kraleppa",
