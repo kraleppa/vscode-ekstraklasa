@@ -3,7 +3,7 @@
   "displayName": "Ekstraklasa Extension",
   "description": "Stay up to date with your favourite football league without leaving a VSCode!",
 	"license": "MIT",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "publisher": "kraleppa",
   "icon": "assets/logo.png",
   "engines": {
