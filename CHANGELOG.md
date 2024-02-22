@@ -8,4 +8,17 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 - Initial release
 - Added command `Ekstraklasa Table`
-- Displaying table of Ekstraklasa in WebView
+- Displaying table of Ekstraklasa:
+  - Team logo
+  - Team position
+  - Team name
+  - Matches played
+  - Wins
+  - Draws
+  - Loses
+  - Goals for
+  - Goals against
+  - Goals difference
+  - Points
+  - Last five results
+  
