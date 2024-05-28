@@ -9,4 +9,4 @@ With this extension you can quickly check what is happening in your favourite fo
 
 Just press `cmd + shift + P` and type in `Ekstraklasa Table` - it's that simple!
 
-<img alt="Preview" src="./assets/preview.png">
+<img alt="Preview" src="./assets/table-preview.png">
