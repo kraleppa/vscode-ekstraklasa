@@ -62,7 +62,7 @@ function parseStandings(standings: Standing[]) {
 }
 
 function standingComponent(standing: Standing) {
-  return /*html*/ `            
+  return /*html*/ `
     <tr>
       <td class="team-info">
         <div class="image-wrapper">
@@ -93,9 +93,11 @@ function parseLastResults(lastResults: MATCH_RESULT[]) {
 }
 
 function dotComponent(result: MATCH_RESULT) {
-  return /*html*/ `
-    <div class="dot" style="background-color: #${resultToColor(result)}"></div>
-  `;
+  return /*html*/ `<div class="${
+    result === MATCH_RESULT.UNKNOWN ? "empty-dot" : "dot"
+  }" style="${
+    result === MATCH_RESULT.UNKNOWN ? "border-color" : "background-color"
+  }: #${resultToColor(result)}"></div>`;
 }
 
 function resultToColor(result: MATCH_RESULT) {
@@ -106,6 +108,10 @@ function resultToColor(result: MATCH_RESULT) {
       return "A5A5A5";
     case MATCH_RESULT.WON:
       return "00E100";
+    case MATCH_RESULT.UNKNOWN:
+      return "A5A5A5";
+    default:
+      return "A5A5A5";
   }
 }
 
@@ -118,7 +124,7 @@ function styles() {
           margin-right: 10%;
           width: 80%;
         }
-      } 
+      }
       table {
         border-collapse: collapse;
         width: 100%;
@@ -142,7 +148,7 @@ function styles() {
         justify-content: center;
         margin-right: 8px;
       }
-      .img { 
+      .img {
         width: auto;
         height: auto;
       }
@@ -155,6 +161,13 @@ function styles() {
         height: 15px;
         width: 15px;
         border-radius: 50%;
+      }
+      .empty-dot {
+        height: 13px;
+        width: 13px;
+        border-radius: 50%;
+        border-style: solid;
+        border-width: 2px;
       }
     </style>
   `;
