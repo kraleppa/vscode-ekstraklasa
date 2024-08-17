@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import path from "path";
 import { Standing, ApiResponse, MATCH_RESULT } from "./types";
 
 const endpoint = "https://ekstraklasa.szarbartosz.com/table";
@@ -12,6 +13,18 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.ViewColumn.One,
         {}
       );
+
+      let iconPath = {
+        light: vscode.Uri.file(
+          path.join(context.extensionPath, "assets", "logo.png")
+        ),
+        dark: vscode.Uri.file(
+          path.join(context.extensionPath, "assets", "logo.png")
+        ),
+      };
+
+      panel.iconPath = iconPath;
+
       showView(panel);
     })
   );
