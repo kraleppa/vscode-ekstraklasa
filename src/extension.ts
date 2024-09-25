@@ -31,14 +31,44 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 async function showView(panel: vscode.WebviewPanel) {
-  const response = await fetch(endpoint);
-  const parsedResponse = (await response.json()) as ApiResponse;
-  const standings = parsedResponse.standings;
+  let standings: Standing[] | null = null;
+
+  panel.webview.html = getLoadingSpinner();
+
+  try {
+    const response = await fetch(endpoint);
+    const parsedResponse = (await response.json()) as ApiResponse;
+    standings = parsedResponse.standings;
+  } catch (error: any) {
+    vscode.window.showErrorMessage(`Failed to fetch ekstraklasa data`);
+  }
 
   panel.webview.html = getWebviewContent(standings);
 }
 
-function getWebviewContent(standings: Standing[]) {
+function getLoadingSpinner() {
+    
+
+  return /*html*/ `
+    <!DOCTYPE html>
+	<html lang="en">
+	  <head>
+	  	<meta charset="UTF-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  	<title>Ekstraklasa Table</title>
+      ${styles()}
+	  </head>
+	  <body>
+      <div class="loader-wrapper">
+        <div class="loader"></div>
+      </div>
+	  </body>
+	</html>
+
+  `;
+}
+
+function getWebviewContent(standings: Standing[] | null) {
   return /*html*/ `
   <!DOCTYPE html>
 	<html lang="en">
@@ -70,7 +100,11 @@ function getWebviewContent(standings: Standing[]) {
   `;
 }
 
-function parseStandings(standings: Standing[]) {
+function parseStandings(standings: Standing[] | null) {
+  if (!standings) {
+    return "";
+  }
+
   return standings.map((standing) => standingComponent(standing)).join("");
 }
 
@@ -110,21 +144,21 @@ function dotComponent(result: MATCH_RESULT) {
     result === MATCH_RESULT.UNKNOWN ? "empty-dot" : "dot"
   }" style="${
     result === MATCH_RESULT.UNKNOWN ? "border-color" : "background-color"
-  }: #${resultToColor(result)}"></div>`;
+  }: var(--${resultToColor(result)})"></div>`;
 }
 
 function resultToColor(result: MATCH_RESULT) {
   switch (result) {
     case MATCH_RESULT.LOST:
-      return "D81A34";
+      return "lost-color";
     case MATCH_RESULT.DRAW:
-      return "A5A5A5";
+      return "draw-color";
     case MATCH_RESULT.WON:
-      return "00E100";
+      return "won-color";
     case MATCH_RESULT.UNKNOWN:
-      return "A5A5A5";
+      return "unknown-color";
     default:
-      return "A5A5A5";
+      return "unknown-color";
   }
 }
 
@@ -138,6 +172,14 @@ function styles() {
           width: 80%;
         }
       }
+
+      :root {
+        --lost-color: #D81A34;
+        --draw-color: #A5A5A5;
+        --won-color: #00E100;
+        --unknown-color: #A5A5A5;
+      }
+
       table {
         border-collapse: collapse;
         width: 100%;
@@ -181,6 +223,37 @@ function styles() {
         border-radius: 50%;
         border-style: solid;
         border-width: 2px;
+      }
+      .loader-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .loader {
+        width: 65px;
+        aspect-ratio: 1;
+        --g: radial-gradient(farthest-side,#0000 calc(95% - 3px),#fff calc(100% - 3px) 98%,#0000 101%) no-repeat;
+        background: var(--g), var(--g), var(--g);
+        background-size: 30px 30px;
+        animation: l10 1.5s infinite;
+      }
+      @keyframes l10 {
+        0% {
+          background-position: 0 0, 0 100%, 100% 100%;
+        }
+        25% {
+          background-position: 100% 0, 0 100%, 100% 100%;
+        }
+        50% {
+          background-position: 100% 0, 0 0, 100% 100%;
+        }
+        75% {
+          background-position: 100% 0, 0 0, 0 100%;
+        }
+        100% {
+          background-position: 100% 100%, 0 0, 0 100%;
+        }
       }
     </style>
   `;
