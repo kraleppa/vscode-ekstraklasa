@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import path from "path";
 import { Standing, ApiResponse, MATCH_RESULT } from "./types";
 
-const endpoint = "https://ekstraklasa.szarbartosz.com/api/standings";
+const endpoint = "https://ekstraklasa.szarbartosz.com/table";
 
 export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
@@ -33,6 +33,8 @@ export function activate(context: vscode.ExtensionContext) {
 async function showView(panel: vscode.WebviewPanel) {
   let standings: Standing[] | null = null;
 
+  panel.webview.html = getLoadingSpinner();
+
   try {
     const response = await fetch(endpoint);
     const parsedResponse = (await response.json()) as ApiResponse;
@@ -42,6 +44,28 @@ async function showView(panel: vscode.WebviewPanel) {
   }
 
   panel.webview.html = getWebviewContent(standings);
+}
+
+function getLoadingSpinner() {
+    
+
+  return /*html*/ `
+    <!DOCTYPE html>
+	<html lang="en">
+	  <head>
+	  	<meta charset="UTF-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  	<title>Ekstraklasa Table</title>
+      ${styles()}
+	  </head>
+	  <body>
+      <div class="loader-wrapper">
+        <div class="loader"></div>
+      </div>
+	  </body>
+	</html>
+
+  `;
 }
 
 function getWebviewContent(standings: Standing[] | null) {
@@ -199,6 +223,37 @@ function styles() {
         border-radius: 50%;
         border-style: solid;
         border-width: 2px;
+      }
+      .loader-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .loader {
+        width: 65px;
+        aspect-ratio: 1;
+        --g: radial-gradient(farthest-side,#0000 calc(95% - 3px),#fff calc(100% - 3px) 98%,#0000 101%) no-repeat;
+        background: var(--g), var(--g), var(--g);
+        background-size: 30px 30px;
+        animation: l10 1.5s infinite;
+      }
+      @keyframes l10 {
+        0% {
+          background-position: 0 0, 0 100%, 100% 100%;
+        }
+        25% {
+          background-position: 100% 0, 0 100%, 100% 100%;
+        }
+        50% {
+          background-position: 100% 0, 0 0, 100% 100%;
+        }
+        75% {
+          background-position: 100% 0, 0 0, 0 100%;
+        }
+        100% {
+          background-position: 100% 100%, 0 0, 0 100%;
+        }
       }
     </style>
   `;
