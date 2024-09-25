@@ -110,21 +110,21 @@ function dotComponent(result: MATCH_RESULT) {
     result === MATCH_RESULT.UNKNOWN ? "empty-dot" : "dot"
   }" style="${
     result === MATCH_RESULT.UNKNOWN ? "border-color" : "background-color"
-  }: #${resultToColor(result)}"></div>`;
+  }: var(--${resultToColor(result)})"></div>`;
 }
 
 function resultToColor(result: MATCH_RESULT) {
   switch (result) {
     case MATCH_RESULT.LOST:
-      return "D81A34";
+      return "lost-color";
     case MATCH_RESULT.DRAW:
-      return "A5A5A5";
+      return "draw-color";
     case MATCH_RESULT.WON:
-      return "00E100";
+      return "won-color";
     case MATCH_RESULT.UNKNOWN:
-      return "A5A5A5";
+      return "unknown-color";
     default:
-      return "A5A5A5";
+      return "unknown-color";
   }
 }
 
@@ -138,6 +138,14 @@ function styles() {
           width: 80%;
         }
       }
+
+      :root {
+        --lost-color: #D81A34;
+        --draw-color: #A5A5A5;
+        --won-color: #00E100;
+        --unknown-color: #A5A5A5;
+      }
+
       table {
         border-collapse: collapse;
         width: 100%;
