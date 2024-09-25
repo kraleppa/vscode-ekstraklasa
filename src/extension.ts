@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import path from "path";
 import { Standing, ApiResponse, MATCH_RESULT } from "./types";
 
-const endpoint = "https://ekstraklasa.szarbartosz.com/table";
+const endpoint = "https://ekstraklasa.szarbartosz.com/api/standings";
 
 export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
@@ -31,14 +31,20 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 async function showView(panel: vscode.WebviewPanel) {
-  const response = await fetch(endpoint);
-  const parsedResponse = (await response.json()) as ApiResponse;
-  const standings = parsedResponse.standings;
+  let standings: Standing[] | null = null;
+
+  try {
+    const response = await fetch(endpoint);
+    const parsedResponse = (await response.json()) as ApiResponse;
+    standings = parsedResponse.standings;
+  } catch (error: any) {
+    vscode.window.showErrorMessage(`Failed to fetch ekstraklasa data`);
+  }
 
   panel.webview.html = getWebviewContent(standings);
 }
 
-function getWebviewContent(standings: Standing[]) {
+function getWebviewContent(standings: Standing[] | null) {
   return /*html*/ `
   <!DOCTYPE html>
 	<html lang="en">
@@ -70,7 +76,11 @@ function getWebviewContent(standings: Standing[]) {
   `;
 }
 
-function parseStandings(standings: Standing[]) {
+function parseStandings(standings: Standing[] | null) {
+  if (!standings) {
+    return "";
+  }
+
   return standings.map((standing) => standingComponent(standing)).join("");
 }
 
