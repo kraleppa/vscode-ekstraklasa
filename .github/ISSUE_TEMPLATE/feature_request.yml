@@ -19,7 +19,7 @@ body:
       description: "Provide a detailed description of the solution you'd propose."
       placeholder: "Explain the solution you'd like..."
     validations:
-      required: false
+      required: true
 
   - type: textarea
     id: alternative-solutions
