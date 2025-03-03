@@ -2,7 +2,6 @@ name: Bug Report
 description: Create a report to help us improve
 title: "Some unexpected behaviour"
 labels: bug
-type: "bug"
 
 body:
   - type: textarea
@@ -14,47 +13,41 @@ body:
     validations:
       required: true
 
-  - type: inputs
-    id: environment-details
+  - type: input
+    id: elixir-version
     attributes:
-      label: "Environment Details"
-      description: "Provide details about your environment."
-      inputs:
-        - type: input
-          id: elixir-version
-          attributes:
-            label: "Elixir version with Erlang/OTP"
-            placeholder: "`elixir -v` output"
-          validations:
-            required: true
-        - type: input
-          id: phoenix-version
-          attributes:
-            label: "Phoenix version"
-            placeholder: "`mix deps` output for Phoenix"
-          validations:
-            required: true
-        - type: input
-          id: liveview-version
-          attributes:
-            label: "Phoenix LiveView version"
-            placeholder: "`mix deps` output for LiveView"
-          validations:
-            required: true
-        - type: input
-          id: operating-system
-          attributes:
-            label: "Operating system"
-            placeholder: "Your operating system"
-          validations:
-            required: true
-        - type: input
-          id: browser
-          attributes:
-            label: "Browser(s)"
-            placeholder: "List browsers and versions"
-          validations:
-            required: false
+      label: "Elixir version with Erlang/OTP"
+      placeholder: "`elixir -v` output"
+    validations:
+      required: true
+  - type: input
+    id: phoenix-version
+    attributes:
+      label: "Phoenix version"
+      placeholder: "`mix deps` output for Phoenix"
+    validations:
+      required: true
+  - type: input
+    id: liveview-version
+    attributes:
+      label: "Phoenix LiveView version"
+      placeholder: "`mix deps` output for LiveView"
+    validations:
+      required: true
+  - type: input
+    id: operating-system
+    attributes:
+      label: "Operating system"
+      placeholder: "Your operating system"
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: "Browser(s)"
+      placeholder: "List browsers and versions"
+    validations:
+      required: false
 
   - type: textarea
     id: actual-behavior
