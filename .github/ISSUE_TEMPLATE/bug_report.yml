@@ -2,8 +2,7 @@ name: Bug Report
 description: Create a report to help us improve
 title: "Some unexpected behaviour"
 labels: bug
-assignees: ""
-type: "Bug"
+type: "bug"
 
 body:
   - type: textarea
